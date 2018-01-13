@@ -9,6 +9,7 @@ public class ConsolePrinter implements Printer {
     System.out.print(board);
   }
 
+
   @Override
   public void printMessage(String message, Point loc) {
     System.out.print(message);

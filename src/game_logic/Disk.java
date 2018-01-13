@@ -1,11 +1,17 @@
 package game_logic;
 
+import javafx.scene.shape.Circle;
+
+//import javafx.scene.shape;
+
 public class Disk {
-  
+  //enum
   private Color color_;
+//  private javafx.scene.shape.Circle circle;
   
   public Disk(Color color) {
     color_ = color;
+//    circle = new Circle();
   }
 
   public Color getColor() {
@@ -24,6 +30,16 @@ public class Disk {
         break;
     }
   }
+  
+//  public void drawDisk(Printer printer) {
+//	  printer.printDisk(this.circle);
+//  }
+//  public Circle getCircle() {
+//	  return this.circle;
+//  }
+//  public void setCircle(Circle c) {
+//	  this.circle=c;
+//  }
 
   @Override
   public int hashCode() {
