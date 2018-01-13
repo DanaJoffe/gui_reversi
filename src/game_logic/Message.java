@@ -53,10 +53,10 @@ public class Message {
   }
 
   public static String declareWinner(String winner) {
-    return "Game over. The winner is... " + winner + "!\n";
+    return "Game over.\nThe winner is... " + winner + "!\n";
   }
 
   public static String declareTie() {
-    return "Game over. It's a tie!\n";
+    return "Game over.\nIt's a tie!\n";
   }
 }

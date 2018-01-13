@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+	
+
+<HBox xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="reversi_app.ReversiGameController" fx:id="root" spacing="10" >
+
+<padding><Insets top="10" bottom="10" left="10"></Insets></padding>
+
+
+<VBox spacing="10">
+<HBox>
+	<Label text="Current player: "/>
+	<Text fx:id="currentPlayer" />
+</HBox>
+
+<HBox>
+	<Text fx:id="firstPlayerColor" />
+	<Label text=" player score: "/>
+	<Text fx:id="firstPlayerScore" />
+</HBox>
+
+<HBox>
+	<Text fx:id="secondPlayerColor" />
+	<Label text=" player score: "/>
+	<Text fx:id="secondPlayerScore" />
+</HBox>
+
+<Text fx:id="gameMessages" />
+
+</VBox>
+</HBox>

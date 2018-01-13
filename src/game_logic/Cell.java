@@ -27,7 +27,7 @@ public class Cell {
     return this.location_;
   }
 
-  boolean hasDisk() {
+  public boolean hasDisk() {
     return !this.isEmpty_;
   }
 

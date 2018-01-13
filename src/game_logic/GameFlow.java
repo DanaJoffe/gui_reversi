@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 public class GameFlow {
-
-  private Board board_;
-  private GameLogic logic_;
-  private Map<Color,Player> players_;
-  private Printer printer_;
-  private int num_disks_played_;
+  
+  protected Board board_;
+  protected GameLogic logic_;
+  protected Map<Color,Player> players_;
+  protected Printer printer_;
+  protected int num_disks_played_;
   
   public GameFlow(Board board, GameLogic logic,
       Map<Color, Player> players, Printer printer) {
@@ -34,7 +34,7 @@ public class GameFlow {
     this.endGame();
   }
 
-  private void initializeBoard() {
+  protected void initializeBoard() {
     int b_r = this.board_.getRows();
     int b_c = this.board_.getCols();
     //place 2 disks of each color in center of board
@@ -48,7 +48,7 @@ public class GameFlow {
     }
   }
 
-  private boolean playOneRound() {
+  protected boolean playOneRound() {
     for (Color c : Color.values()) {
     Point move = new Point();
       //game is over if board is full
@@ -98,7 +98,7 @@ public class GameFlow {
     return true;
   }
 
-  private void endGame() {
+  protected void endGame() {
     Player winner = this.determineWinner();
     if (winner == null) {
       printer_.printMessage(Message.declareTie());
@@ -107,7 +107,7 @@ public class GameFlow {
     }
   }
 
-  private Player determineWinner() {
+  protected Player determineWinner() {
     Map<Color, Integer> num_of_disks = this.logic_.getScores(this.board_);
     //return winner or null if tie
     if (num_of_disks.get(Color.BLACK) > num_of_disks.get(Color.WHITE)) {
