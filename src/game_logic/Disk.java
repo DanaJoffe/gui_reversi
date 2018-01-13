@@ -47,7 +47,6 @@ public class Disk {
     return true;
   }
 
-  //don't really need this
   @Override
   public String toString() {
     switch(color_) {
