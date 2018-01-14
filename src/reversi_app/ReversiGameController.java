@@ -95,7 +95,6 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 	 public void initialize(URL location, ResourceBundle resources) {
 		 
 		 initializeGame();
-
 		 
 		 ReversiBoardController reversiBoard = new ReversiBoardController(this.board, playersColor_);
 		 this.flow_.setVisibleBoard(reversiBoard);
@@ -118,17 +117,19 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 		 
 		 root.setOnMouseReleased(reversiBoard.getOnMouseReleased());
 		 root.setOnMousePressed(reversiBoard.getOnMousePressed());
-		 root.setOnMouseMoved(reversiBoard.getOnMouseMoved());
+		 root.setOnMouseMoved(reversiBoard.getOnMouseMoved()); 
+		 root.setOnMouseExited(reversiBoard.getOnMouseExited());
+		 
 
 	 }
 	 
 	 public int readBoardSizeFromFile() {
-		 return 4;
+		 return 8;
 	 }
 	 public List<String> readColorsFromFile() {
 		 List<String> colors = new ArrayList<String>();
-		 colors.add("GOLD");
-		 colors.add("DARKGRAY");
+		 colors.add("SEAGREEN");
+		 colors.add("TOMATO");
 		 return colors;
 	 }
 }

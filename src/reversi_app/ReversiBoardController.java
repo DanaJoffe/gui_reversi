@@ -11,6 +11,9 @@ import java.util.Set;
 import game_logic.Point;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
@@ -30,22 +33,21 @@ public class ReversiBoardController extends GridPane {
 	 
 	 private List<ClickListener> clickListeners_;
 	 
-	 private Rectangle rectPressed;
-	 private Rectangle rectEntered;
-	 private double x;
-	 private double y;
+	 private Rectangle rectPressed_;
+	 private Rectangle rectEntered_;
+	 private double xPosEntered_;
+	 private double yPosEntered_;
 	 	 
 	 private Circle[][] disks_;
 	 
 
 	 public ReversiBoardController(Board board, Map<game_logic.Color ,Color> playersColor) {
-		 this.x = -1;
-		 this.y = -1;
+		 this.xPosEntered_ = -1;
+		 this.yPosEntered_ = -1;
 		 
 		 this.board = board;
 		 this.printer_ = new GUIPrinter(this, null);
 		 this.playersColor_=playersColor;
-//		 this.diskim_ = new ArrayList<Circle>();
 		 this.clickListeners_ = new ArrayList<ClickListener>();
 		 
 		 this.disks_ = new Circle[this.board.getRows()][this.board.getCols()];
@@ -78,14 +80,14 @@ public class ReversiBoardController extends GridPane {
 			 } else {
 				 this.notifyClickOnBoard(p.getRow(), p.getCol());
 				this.add(rec, p.getCol(), p.getRow());	 
-				this.rectPressed = rec;
+				this.rectPressed_ = rec;
 			 }
 			event.consume();
 			});
 			
 			
 			this.setOnMouseReleased(event -> {						 
-				this.getChildren().remove(rectPressed);
+				this.getChildren().remove(rectPressed_);
 				event.consume();
 			});
 			
@@ -99,10 +101,10 @@ public class ReversiBoardController extends GridPane {
 				int cellHeight =cellHeight();
 				int cellWidth = cellWidth();
 				
-				if (this.x != x || this.y != y) {
-					this.getChildren().remove(rectEntered);
-					this.x=x;
-					this.y=y;
+				if (this.xPosEntered_ != x || this.yPosEntered_ != y) {
+					this.getChildren().remove(rectEntered_);
+					this.xPosEntered_=x;
+					this.yPosEntered_=y;
  
 				Rectangle rec = new Rectangle(cellWidth, cellHeight);
 				rec.setFill(Color.TRANSPARENT);
@@ -112,11 +114,16 @@ public class ReversiBoardController extends GridPane {
 //					 System.out.println("outOfBorders");
 				 } else {
 					this.add(rec, p.getCol(), p.getRow());	 
-					this.rectEntered= rec;
+					this.rectEntered_= rec;
 				 }
 				}
 				event.consume();
 				});
+			
+			this.setOnMouseExited(event -> {
+				this.getChildren().remove(rectEntered_);
+			});
+
 
 		} catch (IOException exception) {
 			 throw new RuntimeException(exception);
@@ -140,10 +147,10 @@ public class ReversiBoardController extends GridPane {
 		 }
 	 }
 
-	 public Point location(double x, double y) {
+	 private Point location(double x, double y) {
 		 int row=0, col=0;		 
-		 int cellHeight = (int)this.getPrefHeight() / board.getRows();
-		 int cellWidth = (int)this.getPrefWidth() / board.getCols();
+		 int cellHeight = cellHeight();//(int)this.getPrefHeight() / board.getRows();
+		 int cellWidth = cellWidth();//(int)this.getPrefWidth() / board.getCols();
 
 		 int height = cellHeight;
 		 int width = cellWidth;
@@ -161,8 +168,8 @@ public class ReversiBoardController extends GridPane {
 
 	 public void draw() {
 		 this.getChildren().clear();
-		 int cellHeight = cellHeight();//height / board.getRows();
-		 int cellWidth = cellWidth();// width / board.getCols();
+		 int cellHeight = cellHeight();
+		 int cellWidth = cellWidth();
 		 
 		 Set<Cell> cells = new HashSet<Cell>(); 
 		 Rectangle rec;
@@ -178,7 +185,6 @@ public class ReversiBoardController extends GridPane {
 						 System.out.println("contains");
 
 				 }
-				 else {}
 				 rec.setFill(Color.ANTIQUEWHITE);
 				 rec.setStroke(Color.BROWN);
 				 this.add(rec, j, i);
@@ -186,10 +192,7 @@ public class ReversiBoardController extends GridPane {
 		 }
 
 		 drawDisks(cells);
-//		 player.draw(cellWidth, cellHeight);
-
 		 initGridSizes();
-		
 	}
 	 
 	 private void initGridSizes() {
@@ -201,14 +204,18 @@ public class ReversiBoardController extends GridPane {
 		int radius = (int)Math.min(cellHeight(), cellWidth())/4;
 		
 		for (Cell cell: cells) {
+			 int cellRow = cell.getLocation().getRow();
+			 int cellCol = cell.getLocation().getCol();
 			 Circle circle = new Circle(radius);
 			 circle.setFill(this.playersColor_.get(cell.getDisk().getColor()));
-//			 System.out.println("add " + cell.getDisk().getColor());
 			 
-			 this.getChildren().remove(this.disks_[cell.getLocation().getRow()][cell.getLocation().getCol()]);
+			 this.getChildren().remove(this.disks_[cellRow][cellCol]);
 			 
-			 this.add(circle, cell.getLocation().getCol(), cell.getLocation().getRow());			 
-			 this.disks_[cell.getLocation().getRow()][cell.getLocation().getCol()] = circle;
+			 this.add(circle, cellCol, cellRow);					 
+			 this.setHalignment(circle, HPos.CENTER);
+			 this.setValignment(circle, VPos.CENTER);
+
+			 this.disks_[cellRow][cellCol] = circle;
 			 
 		}	
 	}
