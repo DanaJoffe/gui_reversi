@@ -31,9 +31,9 @@ public class SettingsController {
   @FXML private ChoiceBox<Integer> board_size;
   
   private ObservableList<String> color_options = 
-      FXCollections.observableArrayList("RED", "ORANGE", "YELLOW", "GREEN",
-                                  "BLUE", "PURPLE", "HOTPINK", "WHITE", 
-                                  "SADDLEBROWN", "BLACK", "SILVER");
+      FXCollections.observableArrayList("Red", "Orange", "Yellow", "Green",
+                                  "Blue", "Purple", "HotPink", "White", 
+                                  "SaddleBrown", "Black", "Silver");
   private ObservableList<Integer> board_size_options = 
       FXCollections.observableArrayList(4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                                 14, 15, 16, 17, 18, 19, 20);

@@ -48,7 +48,7 @@ public class GameFlow {
     }
   }
 
-  protected boolean playOneRound() {
+  private boolean playOneRound() {
     for (Color c : Color.values()) {
     Point move = new Point();
       //game is over if board is full
