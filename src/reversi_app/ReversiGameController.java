@@ -129,7 +129,7 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 		 });
 
 		 root.heightProperty().addListener((observable, oldValue, newValue) -> {
-			 double boardNewHeight = newValue.doubleValue() - 50;
+			 double boardNewHeight = newValue.doubleValue() - 55;
 
 			 reversiBoard.setPrefHeight(boardNewHeight);
 			 reversiBoard.draw();
