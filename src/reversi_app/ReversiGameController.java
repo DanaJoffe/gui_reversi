@@ -1,20 +1,12 @@
 package reversi_app;
 import game_logic.*;
-import game_logic.Player;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
-
-import com.sun.javafx.css.converters.ColorConverter;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,8 +24,6 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 
 	
   @FXML private MenuBar menu_bar;
-//  @FXML private MenuItem edit_settings;
-  
 	@FXML private Text currentPlayer;
 	@FXML private Text firstPlayerScore;
 	@FXML private Text secondPlayerScore;
@@ -50,7 +40,7 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 	 private Map<game_logic.Color ,Color> playersColor_;
 	 private Map<game_logic.Color ,String> playersName_;
 
-	 @FXML 
+	 @FXML
 	 private void openSettings(ActionEvent event) throws IOException {
 	   Stage stage;
 	   Parent new_root;
@@ -80,7 +70,7 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 	 }
 
 	 private void initializeGame() {
-		 List<String> colors = SettingsController.colorsInSettings(); 
+		 List<String> colors = SettingsController.colorsSettings(); 
 		 setPlayersColors(colors.get(0), colors.get(1));
 		 
 		 this.playersName_ =  new HashMap<game_logic.Color, String>();
@@ -92,7 +82,7 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 		 playersName_.put(game_logic.Color.WHITE, colors.get(1));
 		 playersColor_.put(game_logic.Color.WHITE, Color.valueOf(colors.get(1).toUpperCase()));
 		 
-		 int size = SettingsController.boardSizeInSettings(); 
+		 int size = SettingsController.boardSizeSettings(); 
 		 this.gameSetUp_= new GameSetUp(size, size);
 		 this.flow_= new GUIGameFlow(gameSetUp_.getBoard(), gameSetUp_.getLogic(),
 				 gameSetUp_.getPlayers(), gameSetUp_.getPrinter());
@@ -139,7 +129,7 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 		 });
 
 		 root.heightProperty().addListener((observable, oldValue, newValue) -> {
-			 double boardNewHeight = newValue.doubleValue() - 50;
+			 double boardNewHeight = newValue.doubleValue() - 60;
 
 			 reversiBoard.setPrefHeight(boardNewHeight);
 			 reversiBoard.draw();

@@ -24,6 +24,9 @@ import javafx.stage.Stage;
 
 public class SettingsController {
   
+  static final int DEFAULT_BOARD_SIZE = 8;
+  static final String DEFAULT_COLOR_1 = "Black";
+  static final String DEFAULT_COLOR_2 = "White";
   @FXML private Button exit_settings;
   @FXML private Button save;
   @FXML private ChoiceBox<String> color_menu_1;
@@ -31,9 +34,9 @@ public class SettingsController {
   @FXML private ChoiceBox<Integer> board_size;
   
   private ObservableList<String> color_options = 
-      FXCollections.observableArrayList("RED", "ORANGE", "YELLOW", "GREEN",
-                                  "BLUE", "PURPLE", "HOTPINK", "WHITE", 
-                                  "SADDLEBROWN", "BLACK", "SILVER");
+      FXCollections.observableArrayList("Red", "Orange", "Yellow", "Green",
+                                  "Blue", "Purple", "HotPink", "White", 
+                                  "SaddleBrown", "Black", "Silver");
   private ObservableList<Integer> board_size_options = 
       FXCollections.observableArrayList(4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                                 14, 15, 16, 17, 18, 19, 20);
@@ -41,9 +44,9 @@ public class SettingsController {
   @FXML
   private void initialize() {
     //get current settings values
-    String color_1 = SettingsController.colorsInSettings().get(0); 
-    String color_2 = SettingsController.colorsInSettings().get(1);
-    Integer size = SettingsController.boardSizeInSettings();
+    String color_1 = SettingsController.colorsSettings().get(0); 
+    String color_2 = SettingsController.colorsSettings().get(1);
+    Integer size = SettingsController.boardSizeSettings();
     //set choice boxes for each setting
     color_menu_1.setItems(color_options);
     color_menu_1.setValue(color_1); 
@@ -72,8 +75,8 @@ public class SettingsController {
     }     
   }
   
-  @FXML 
-  private void closeSettings(ActionEvent event) throws IOException {
+  @FXML
+  private void closeSettings(ActionEvent event) {
     Stage stage = (Stage)exit_settings.getScene().getWindow();
     stage.close();
   }
@@ -92,7 +95,7 @@ public class SettingsController {
       os.println(color2);
       os.println(b_size);
     } catch (IOException e) {
-      System.out.println("Error saving settings to file.");
+      System.out.println("Error saving settings to file."); //should we throw exception?
     } finally {
       if (os != null) {
         os.close();
@@ -112,29 +115,40 @@ public class SettingsController {
         settings.add(line);
       }
     } catch (IOException e) {
-      System.out.println("Error reading settings file.");
+      return null;
     } finally {
       if (reader != null) {
         try {
           reader.close();
         } catch (IOException e) {
-          System.out.println("Error closing settings file.");
+          System.out.println("Error closing settings file."); //should we throw exception?
         }
       }
     }
     return settings;
   }
   
-  public static List<String> colorsInSettings() {
+  public static List<String> colorsSettings() {
+    List<String> colors = new ArrayList<String>();
     List<String> settings = SettingsController.readSettingsFromFile();
-    List<String> colors = new ArrayList<String>(settings);
-    colors.remove(2);
+    if (settings != null) {
+      colors.addAll(settings);
+      colors.remove(2);
+    } else {
+      colors.add(DEFAULT_COLOR_1);
+      colors.add(DEFAULT_COLOR_2);
+    }
     return colors;
   }
   
-  public static Integer boardSizeInSettings() {
+  public static Integer boardSizeSettings() {
     List<String> settings = SettingsController.readSettingsFromFile();
-    Integer size = Integer.valueOf(settings.get(2));
+    Integer size;
+    if (settings != null) {
+      size = Integer.valueOf(settings.get(2));
+    } else {
+      size = DEFAULT_BOARD_SIZE;
+    }
     return size;
   }  
 }
