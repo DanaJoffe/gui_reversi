@@ -7,12 +7,28 @@
 <?import javafx.geometry.*?>
 	
 
-<HBox xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml/1"
 fx:controller="reversi_app.ReversiGameController" fx:id="root" spacing="10" >
 
-<padding><Insets top="10" bottom="10" left="10"></Insets></padding>
-
-
+<MenuBar fx:id="menu_bar">
+        <menus>
+          <Menu text="File">
+            <items>
+              <MenuItem text="New game" onAction="#startNewGame"/>
+              <MenuItem text="Exit" onAction="#exitGame"/>
+            </items>
+          </Menu>
+          <Menu text="Settings">
+            <items>
+              <MenuItem text="Edit settings" onAction="#openSettings"/>
+            </items>
+          </Menu>          
+        </menus>
+</MenuBar>
+	
+	
+<HBox spacing="10" fx:id="center">
+<padding><Insets bottom="10" left="10"></Insets></padding>
 <VBox spacing="10">
 <HBox>
 	<Label text="Current player: "/>
@@ -35,3 +51,4 @@ fx:controller="reversi_app.ReversiGameController" fx:id="root" spacing="10" >
 
 </VBox>
 </HBox>
+</VBox>
