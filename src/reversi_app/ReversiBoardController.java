@@ -12,7 +12,6 @@ import game_logic.Point;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
@@ -206,15 +205,16 @@ public class ReversiBoardController extends GridPane {
 		for (Cell cell: cells) {
 			 int cellRow = cell.getLocation().getRow();
 			 int cellCol = cell.getLocation().getCol();
+
 			 Circle circle = new Circle(radius);
 			 circle.setFill(this.playersColor_.get(cell.getDisk().getColor()));
 			 
 			 this.getChildren().remove(this.disks_[cellRow][cellCol]);
 			 
 			 this.add(circle, cellCol, cellRow);					 
-			 this.setHalignment(circle, HPos.CENTER);
-			 this.setValignment(circle, VPos.CENTER);
-
+			 GridPane.setHalignment(circle, HPos.CENTER);
+			 GridPane.setValignment(circle, VPos.CENTER);
+			 
 			 this.disks_[cellRow][cellCol] = circle;
 			 
 		}	
@@ -227,21 +227,6 @@ public class ReversiBoardController extends GridPane {
 	private int cellWidth() {
 		return (int)this.getPrefWidth() / board.getCols();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	 private int getRowCount(GridPane pane) {
         int numRows = pane.getRowConstraints().size();
