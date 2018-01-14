@@ -2,6 +2,10 @@ package game_logic;
 
 import java.util.Arrays;
 
+/**
+ * board of game
+ * holds matrix (rows x columns) of cells
+ */
 public class Board {
   
   static final int DEFAULT_ROWS = 8;
@@ -9,7 +13,12 @@ public class Board {
   private int rows_;
   private int columns_;
   private Cell[][] board_;
-  
+
+  /**
+   * constructs Board of Cells of size rows x columns 
+   * @param rows
+   * @param columns
+   */
   public Board(int rows, int columns) {
     rows_ = rows;
     columns_ = columns;
@@ -24,10 +33,17 @@ public class Board {
     }
   }
   
+  /**
+   * constructs Board of Cells of size default rows x default columns  
+   */
   public Board() {
     this(DEFAULT_ROWS, DEFAULT_COlS);
   }
 
+  /**
+   * copy constructor for board
+   * @param oldBoard the board to copy
+   */
   public Board(Board oldBoard) {
     rows_ = oldBoard.getRows();
     columns_ = oldBoard.getCols();
@@ -42,14 +58,28 @@ public class Board {
     }
   }
 
+  /**
+   * access number of rows in board
+   * @return rows
+   */
   public int getRows() {
     return this.rows_;
   }
 
+  /**
+   *  access number of columns in board
+   * @return columns
+   */
   public int getCols() {
     return this.columns_;
   }
 
+  /**
+   * access cell in certain location
+   * @param row of cell
+   * @param col of cell
+   * @return cell
+   */
   public Cell getCell(int row, int col) {
     if (row >= 0 && col >= 0
         && row < this.rows_ && col < this.columns_) {
@@ -59,10 +89,22 @@ public class Board {
     }
   }
 
+  /**
+   * access cell in certain location
+   * @param p the point location of cell
+   * @return cell
+   */
   public Cell getCell(Point p) {
     return this.getCell(p.getRow(), p.getCol());
   }
 
+  /**
+   * get neighbor of certain cell in certain direction
+   * @param row of cell
+   * @param col of cell
+   * @param dir the direction of the neighbor
+   * @return neighboring cell
+   */
   public Cell getNeighboringCell(int row, int col, Direction dir) {
 
     switch(dir) {

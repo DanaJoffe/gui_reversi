@@ -1,17 +1,30 @@
 package game_logic;
 
+/**
+ * cell in specific location in board.
+ * can be empty or can hold disk.
+ */
 public class Cell {
   
   private Point location_;
   private Disk disk_;
   private boolean isEmpty_;
   
+  /**
+   * constructs cell with row & column
+   * @param row
+   * @param column
+   */
   public Cell(int row, int column) {
     location_ = new Point(row, column);
     disk_ = null;
     isEmpty_ = true;
   }
 
+  /**
+   * copy constructor
+   * @param oldCell the cell to copy
+   */
   public Cell(Cell oldCell) {
     location_ = new Point(oldCell.getLocation().getRow(), 
                       oldCell.getLocation().getCol());
@@ -23,14 +36,26 @@ public class Cell {
     }
   }
 
+  /**
+   * access location of cell
+   * @return point of location
+   */
   public Point getLocation() {
     return this.location_;
   }
 
+  /**
+   * check if cell has disk
+   * @return true if has disk, otherwise return false
+   */
   public boolean hasDisk() {
     return !this.isEmpty_;
   }
 
+  /**
+   * insert disk in cell
+   * @param color of disk
+   */
   public void insertDisk(Color color) {
     this.disk_ = new Disk(color);
     this.isEmpty_ = false;
@@ -70,6 +95,10 @@ public class Cell {
     return true;
   }
 
+  /**
+   * access disk in cell
+   * @return disk
+   */
   public Disk getDisk() {
     return this.disk_;
   }
