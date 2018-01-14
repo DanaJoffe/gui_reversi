@@ -85,16 +85,6 @@ public class ReversiGameController implements Initializable, GameInfoListener {
 		 List<GameInfoListener> watchers = new ArrayList<GameInfoListener>();
 		 watchers.add(this);
 		 this.gameSetUp_= new GUIgameSetUp(size, size, watchers);		 
-//=======
-//		 int size = SettingsController.boardSizeSettings(); 
-//		 this.gameSetUp_= new GameSetUp(size, size);
-//		 this.flow_= new GUIGameFlow(gameSetUp_.getBoard(), gameSetUp_.getLogic(),
-//				 gameSetUp_.getPlayers(), gameSetUp_.getPrinter());
-//		 this.board = gameSetUp_.getBoard();
-//
-//		 this.flow_.initializeBoard();
-//		 this.flow_.addGameWatcher(this);
-//>>>>>>> 523a7a6fddc990f584f57e389f9c37573a680ca6
 	 }
 	 
 	 private void setPlayersColors(String first, String second) {
