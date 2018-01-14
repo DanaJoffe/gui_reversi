@@ -2,6 +2,10 @@ package game_logic;
 
 import java.util.List;
 
+/**
+ * Independent functions that return a string message.
+ * Each function returns a message with the essence of their names.
+ */
 public class Message {
 
   public static String getPlayerName(Color color) {

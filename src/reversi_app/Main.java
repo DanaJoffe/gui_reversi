@@ -8,6 +8,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXMLLoader;
 
+
+/**
+ * Run GUI Reversi
+ */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {

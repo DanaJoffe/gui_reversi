@@ -1,5 +1,8 @@
 package game_logic;
 
+/**
+ * point of specified row,column
+ */
 public class Point {
 	
   static final int DEF_ROW = -1;
@@ -7,19 +10,35 @@ public class Point {
 	private int row_;
 	private int column_;
 	
+	/**
+	 * constructs point
+	 * @param row
+	 * @param column
+	 */
 	public Point(int row, int column) {
 	  row_ = row;
 	  column_ = column;	  
 	}
 	
+	/**
+	 * constructs point with default row and column
+	 */
 	public Point() {
 	  this(DEF_ROW, DEF_COL);	  
 	}
 
+	/**
+	 * access column coordinate of point
+	 * @return column
+	 */
 	public int getCol() {
 	  return column_;
 	}
 
+	/**
+	 * access row coordinate of point
+	 * @return row
+	 */
 	public int getRow() {
 	  return row_;
 	}
