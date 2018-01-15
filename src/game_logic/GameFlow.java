@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import game_UI.Message;
+import game_UI.Printer;
+import game_components.Board;
+import game_components.Cell;
+import game_components.Color;
+import game_components.Player;
+import game_components.Point;
+
 /**
  * controls flow of game
  */

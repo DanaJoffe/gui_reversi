@@ -1,4 +1,4 @@
-package game_logic;
+package game_components;
 
 import java.util.Arrays;
 

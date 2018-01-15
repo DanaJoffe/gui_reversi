@@ -1,6 +1,10 @@
-package game_logic;
+package game_UI;
 
 import java.util.List;
+
+import game_components.Cell;
+import game_components.Color;
+import game_components.Point;
 
 /**
  * Independent functions that return a string message.

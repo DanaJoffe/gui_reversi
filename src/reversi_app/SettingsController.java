@@ -35,10 +35,9 @@ public class SettingsController {
   private ObservableList<String> color_options = 
       FXCollections.observableArrayList("Red", "Orange", "Yellow", "Green",
                                   "Blue", "Purple", "HotPink", "White", 
-                                  "SaddleBrown", "Black", "Silver");
+                                  "Brown", "Black", "Silver");
   private ObservableList<Integer> board_size_options = 
-      FXCollections.observableArrayList(4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                                14, 15, 16, 17, 18, 19, 20);
+      FXCollections.observableArrayList(4, 6, 8, 10, 12, 14, 16, 18, 20);
   /**
    * initialize settings screen with color options and board size options.
    */
@@ -116,6 +115,10 @@ public class SettingsController {
   }
   /**
    * read settings saved in file
+   * file format:
+   * <1st player's color>
+   * <2nd player's color>
+   * <board size>
    * @return list of values in settings if they exist, else return null
    */
   public static List<String> readSettingsFromFile() {
@@ -152,8 +155,8 @@ public class SettingsController {
     List<String> colors = new ArrayList<String>();
     List<String> settings = SettingsController.readSettingsFromFile();
     if (settings != null) {
-      colors.addAll(settings);
-      colors.remove(2);
+      colors.add(settings.get(0));
+      colors.add(settings.get(1));
     } else {
       colors.add(DEFAULT_COLOR_1);
       colors.add(DEFAULT_COLOR_2);

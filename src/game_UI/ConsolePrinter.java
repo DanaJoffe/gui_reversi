@@ -1,4 +1,7 @@
-package game_logic;
+package game_UI;
+
+import game_components.Board;
+import game_components.Point;
 
 public class ConsolePrinter implements Printer {
   

@@ -8,7 +8,7 @@ public interface GameInfoListener {
    * Switch current player
    * @param player color of current player
    */
-	 public void currentPlayerChanged(game_logic.Color player);
+	 public void currentPlayerChanged(game_components.Color player);
 	 /**
 	  * Change scores of players
 	  * @param first the score of the first player

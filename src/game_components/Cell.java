@@ -1,4 +1,4 @@
-package game_logic;
+package game_components;
 
 /**
  * cell in specific location in board.

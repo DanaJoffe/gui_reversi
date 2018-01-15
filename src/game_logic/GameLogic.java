@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import game_components.Board;
+import game_components.Cell;
+import game_components.Color;
+import game_components.Direction;
+import game_components.Point;
+
 /**
  * supplies game logic according to game rules.
  */

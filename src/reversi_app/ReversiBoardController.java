@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import game_logic.Point;
+import game_components.Board;
+import game_components.Cell;
+import game_components.Point;
+
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
@@ -18,13 +21,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * controls the GUI reversi boar and is the GUI reversi baord
+ */
 public class ReversiBoardController extends GridPane implements ClickableBoard {
 	//grid info 
 	 private int gridRows_;
 	 private int gridCols_;
 	
 	 private Board board;	
-	 private Map<game_logic.Color ,Color> playersColor_;
+	 private Map<game_components.Color ,Color> playersColor_;
 	 
 	 private List<ClickListener> clickListeners_;
 	 
@@ -36,7 +42,14 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 	 private Circle[][] disks_;
 	 
 
-	 public ReversiBoardController(Board board, Map<game_logic.Color ,Color> playersColor) {
+	 /**
+	  * construct reversi board controller
+	  * reversi board controller has click listeners and disks
+	  * will load fxml of board and set on mouse: pressed, released and moved
+	  * @param board the game board
+	  * @param playersColor the player's colors
+	  */
+	 public ReversiBoardController(Board board, Map<game_components.Color ,Color> playersColor) {
 		 this.xPosEntered_ = -1;
 		 this.yPosEntered_ = -1;
 		 
@@ -54,19 +67,19 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 			 fxmlLoader.load(); 
 			 
 			this.setOnMousePressed(event -> {			
-			double x = event.getX();
-			double y = event.getY();
-			Point p = location(x, y);
-			Rectangle rec = new Rectangle(cellWidth(), cellHeight());
-			rec.setFill(Color.TRANSPARENT);
-			rec.setStroke(Color.CYAN);
+			  double x = event.getX();
+			  double y = event.getY();
+			  Point p = location(x, y);
+			  Rectangle rec = new Rectangle(cellWidth(), cellHeight());
+			  rec.setFill(Color.TRANSPARENT);
+			  rec.setStroke(Color.CYAN);
 
-			 if (p.getCol() < this.gridCols_ && p.getRow() < this.gridRows_ && p.getCol() >= 0 && p.getRow() >= 0) { 
-				this.notifyClickOnBoard(p.getRow(), p.getCol());
-				this.add(rec, p.getCol(), p.getRow());	 
-				this.rectPressed_ = rec;
-			 }
-			event.consume();
+			  if (p.getCol() < this.gridCols_ && p.getRow() < this.gridRows_ && p.getCol() >= 0 && p.getRow() >= 0) { 
+			    this.notifyClickOnBoard(p.getRow(), p.getCol());
+			    this.add(rec, p.getCol(), p.getRow());	 
+			    this.rectPressed_ = rec;
+			  }
+			  event.consume();
 			});
 			
 			this.setOnMouseReleased(event -> {						 
@@ -87,15 +100,15 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 					this.xPosEntered_=x;
 					this.yPosEntered_=y;
  
-				    Rectangle rec = new Rectangle(cellWidth, cellHeight);
-				    rec.setFill(Color.TRANSPARENT);
-			     	rec.setStroke(Color.BLUE);
+				  Rectangle rec = new Rectangle(cellWidth, cellHeight);
+				  rec.setFill(Color.TRANSPARENT);
+			    rec.setStroke(Color.BLUE);
 
-			     	if (p.getCol() < this.gridCols_ && p.getRow() < this.gridRows_ &&
-			     			p.getCol() >= 0 && p.getRow() >= 0) { 
-			     		this.add(rec, p.getCol(), p.getRow());	 
-			     		this.rectEntered_= rec;
-			     	}
+			    if (p.getCol() < this.gridCols_ && p.getRow() < this.gridRows_ &&
+			        p.getCol() >= 0 && p.getRow() >= 0) { 
+			      this.add(rec, p.getCol(), p.getRow());	 
+			     	this.rectEntered_= rec;
+			    }
 				}
 				event.consume();
 			});
@@ -103,19 +116,26 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 			this.setOnMouseExited(event -> {
 				this.getChildren().remove(rectEntered_);
 			});
-		} catch (IOException exception) {
+		 } catch (IOException exception) {
 			 throw new RuntimeException(exception);
-		}
-
+		 }
 	 }
 	 
+	 @Override
 	 public void addClickListener(ClickListener listener) {
 		 this.clickListeners_.add(listener);
 	 }
+	 
+	 @Override
 	 public void removeClickListener(ClickListener listener) {
 		 this.clickListeners_.remove(listener);
 	 }
 	 
+	 /**
+	  * notify click listeners that board was clicked
+	  * @param row of location of click
+	  * @param col of location of click
+	  */
 	 private void notifyClickOnBoard(int row, int col) {
 		 List<ClickListener> clickListeners = new ArrayList<ClickListener>(this.clickListeners_);
 		 if (!clickListeners.isEmpty()) {
@@ -125,6 +145,12 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 		 }
 	 }
 
+	 /**
+	  * get point of cell location on board of (x,y)
+	  * @param x
+	  * @param y
+	  * @return point
+	  */
 	 private Point location(double x, double y) {
 		 int row=0, col=0;		 
 		 int cellHeight = cellHeight();
@@ -144,6 +170,9 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 		 return new Point(row,col);
 	 }
 
+	 /**
+	  * draw board
+	  */
 	 public void draw() {
 		 this.getChildren().clear();
 		 int cellHeight = cellHeight();
@@ -172,67 +201,90 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 		 drawDisks(cells);
 		 initGridSizes();
 	}
+	
+	/**
+	 * set number of rows and columns in gridpane of board
+	 */
+  private void initGridSizes() {
+    this.gridRows_ = getRowCount(this);
+	  this.gridCols_ = getColCount(this);
+	}
 	 
-	 private void initGridSizes() {
-		 this.gridRows_ = getRowCount(this);
-		 this.gridCols_ = getColCount(this);
-	 }
-	 
-	public void drawDisks(Set<Cell> cells) {
-		int radius = (int)Math.min(cellHeight(), cellWidth())/4;
+	/**
+	 * draw disks in given cells 
+	 */
+  public void drawDisks(Set<Cell> cells) {
+    int radius = (int)Math.min(cellHeight(), cellWidth())/4;
 		
 		for (Cell cell: cells) {
-			 int cellRow = cell.getLocation().getRow();
-			 int cellCol = cell.getLocation().getCol();
+		  int cellRow = cell.getLocation().getRow();
+			int cellCol = cell.getLocation().getCol();
 
-			 Circle circle = new Circle(radius);
-			 circle.setFill(this.playersColor_.get(cell.getDisk().getColor()));
-			 circle.setStroke(Color.BLACK);
+			Circle circle = new Circle(radius);
+			circle.setFill(this.playersColor_.get(cell.getDisk().getColor()));
+			circle.setStroke(Color.BLACK);
 			 
-			 this.getChildren().remove(this.disks_[cellRow][cellCol]);
+			this.getChildren().remove(this.disks_[cellRow][cellCol]);
 			 
-			 this.add(circle, cellCol, cellRow);
-			 GridPane.setHalignment(circle, HPos.CENTER);
-			 GridPane.setValignment(circle, VPos.CENTER);
+			this.add(circle, cellCol, cellRow);
+			GridPane.setHalignment(circle, HPos.CENTER);
+			GridPane.setValignment(circle, VPos.CENTER);
 			 
-			 this.disks_[cellRow][cellCol] = circle;
+			this.disks_[cellRow][cellCol] = circle;
 		}	
 	}
 	
+  /**
+   * get single cell height
+   * @return cell height
+   */
 	private int cellHeight() {
 		return (int)this.getPrefHeight() / board.getRows();
 	}
 	
+	/**
+	 * get single cell's width
+	 * @return cell width
+	 */
 	private int cellWidth() {
 		return (int)this.getPrefWidth() / board.getCols();
 	}
 	
-	 private int getRowCount(GridPane pane) {
-        int numRows = pane.getRowConstraints().size();
-        for (int i = 0; i < pane.getChildren().size(); i++) {
-            Node child = pane.getChildren().get(i);
-            if (child.isManaged()) {
-                Integer rowIndex = GridPane.getRowIndex(child);
-                if(rowIndex != null){
-                    numRows = Math.max(numRows,rowIndex+1);
-                }
-            }
+	/**
+	 * get number of rows in gridpane of board
+	 * @param pane the gridpane
+	 * @return the number of rows
+	 */
+	private int getRowCount(GridPane pane) {
+	  int numRows = pane.getRowConstraints().size();
+    for (int i = 0; i < pane.getChildren().size(); i++) {
+      Node child = pane.getChildren().get(i);
+      if (child.isManaged()) {
+        Integer rowIndex = GridPane.getRowIndex(child);
+        if(rowIndex != null){
+          numRows = Math.max(numRows,rowIndex+1);
         }
-        return numRows;
+      }
     }
-	 private int getColCount(GridPane pane) {
-        int numColumns = pane.getColumnConstraints().size();
-        for (int i = 0; i < pane.getChildren().size(); i++) {
-            Node child = pane.getChildren().get(i);
-            if (child.isManaged()) {
-                Integer rowIndex = GridPane.getColumnIndex(child);
-                if(rowIndex != null){
-                	numColumns= Math.max(numColumns,rowIndex+1);
-                }
-            }
+    return numRows;
+  }
+	
+	 /**
+   * get number of columns in gridpane of board
+   * @param pane the gridpane
+   * @return the number of columns
+   */
+	private int getColCount(GridPane pane) {
+	  int numColumns = pane.getColumnConstraints().size();
+    for (int i = 0; i < pane.getChildren().size(); i++) {
+      Node child = pane.getChildren().get(i);
+      if (child.isManaged()) {
+        Integer rowIndex = GridPane.getColumnIndex(child);
+        if(rowIndex != null){
+          numColumns= Math.max(numColumns,rowIndex+1);
         }
-        return numColumns;
+      }
     }
+    return numColumns;
+  }
 }
-
-

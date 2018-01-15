@@ -1,5 +1,9 @@
 package reversi_app;
 
-public interface ClickableBoard extends ClickNotifiyer, DiskDrawer {
+/**
+ * board that when clicked on will notify click listeners about click
+ * and draw disks in it
+ */
+public interface ClickableBoard extends ClickNotifier, DiskDrawer {
 
 }
