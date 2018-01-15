@@ -107,7 +107,7 @@ public class SettingsController {
       os.println(color2);
       os.println(b_size);
     } catch (IOException e) {
-      System.out.println("Error saving settings to file."); //should we throw exception?
+      System.out.println("Error saving settings to file.");
     } finally {
       if (os != null) {
         os.close();
@@ -136,7 +136,7 @@ public class SettingsController {
         try {
           reader.close();
         } catch (IOException e) {
-          System.out.println("Error closing settings file."); //should we throw exception?
+          System.out.println("Error closing settings file.");
         }
       }
     }
