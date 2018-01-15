@@ -68,7 +68,7 @@ public class GameFlow {
    * play one round of game, one turn for each player
    * @return true if game should continue, false if game is over
    */
-  protected boolean playOneRound() {
+  private boolean playOneRound() {
     for (Color c : Color.values()) {
     Point move = new Point();
       //game is over if board is full

@@ -8,13 +8,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXMLLoader;
 
+
 /**
  * Run GUI Reversi
  */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		System.out.println("start REVERSI\n");
 		try {
 			VBox root = (VBox)FXMLLoader.load(getClass().getResource("ReversiGame.fxml"));
 			Scene scene = new Scene(root,680,480);
@@ -28,7 +28,6 @@ public class Main extends Application {
 			e.printStackTrace();
 			System.out.println("error: " + e.getMessage());
 		}
-		System.out.println("start-ends\n");
 	}
 	public static void main(String[] args) {
 		launch(args);
