@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -100,9 +101,9 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 					this.xPosEntered_=x;
 					this.yPosEntered_=y;
  
-				  Rectangle rec = new Rectangle(cellWidth, cellHeight);
-				  rec.setFill(Color.TRANSPARENT);
-			    rec.setStroke(Color.BLUE);
+				    Rectangle rec = new Rectangle(cellWidth, cellHeight);
+				    rec.setFill(Color.TRANSPARENT);
+			        rec.setStroke(Color.BLUE);
 
 			    if (p.getCol() < this.gridCols_ && p.getRow() < this.gridRows_ &&
 			        p.getCol() >= 0 && p.getRow() >= 0) { 
@@ -222,7 +223,12 @@ public class ReversiBoardController extends GridPane implements ClickableBoard {
 
 			Circle circle = new Circle(radius);
 			circle.setFill(this.playersColor_.get(cell.getDisk().getColor()));
-			circle.setStroke(Color.BLACK);
+			
+			DropShadow ds = new DropShadow();
+			ds.setOffsetX(4.0f);
+			ds.setOffsetY(4.0f);
+			ds.setColor(Color.BLACK);
+			circle.setEffect(ds);
 			 
 			this.getChildren().remove(this.disks_[cellRow][cellCol]);
 			 
